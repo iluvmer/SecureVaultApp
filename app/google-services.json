@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1038697284012",
+    "project_id": "vaultapp-5b7a1",
+    "storage_bucket": "vaultapp-5b7a1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038697284012:android:80a2bf84385eb739b8fa09",
+        "android_client_info": {
+          "package_name": "com.meriem.securevaultapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoIRyQ3GrGLdhHDqQM5RRkVrUq85nRq_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
