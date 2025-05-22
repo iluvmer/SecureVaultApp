@@ -10,5 +10,5 @@
         android:verticalSpacing="8dp"
         android:horizontalSpacing="8dp"
         android:padding="8dp"
-         />
+        android:background="@color/bgbeige" />
 </androidx.constraintlayout.widget.ConstraintLayout>

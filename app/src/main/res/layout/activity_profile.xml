@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgbeige">
+
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="123dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="88dp"
+        android:src="@drawable/pfp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/edit_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/edit_icon"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@id/profile_image"
+        app:layout_constraintEnd_toEndOf="@id/profile_image"
+        android:layout_marginEnd="-10dp"
+        android:layout_marginBottom="-10dp" />
+
+    <LinearLayout
+        android:id="@+id/info_section"
+        android:layout_width="407dp"
+        android:layout_height="343dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+
+            android:background="#CCCCCC" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="Brahimi hadjer"
+            android:textColor="#808080"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="E-mail"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="#CCCCCC" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="Brahimihadjer@gmail.com"
+            android:textColor="#808080"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Phone Number"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="#CCCCCC" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="0550623691"
+            android:textColor="#808080"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="145dp"
+        android:layout_height="65dp"
+        android:backgroundTint="@color/navy"
+        android:gravity="center"
+        android:text="Log out"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.921" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
