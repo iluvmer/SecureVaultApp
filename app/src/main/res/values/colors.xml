@@ -2,5 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="beige">#e6d7c4</color>
+    <color name="beige">#e6d8c7</color>
+    <color name="bgbeige">#F8F3EA</color>
+    <color name="navy">#212842</color>
 </resources>
