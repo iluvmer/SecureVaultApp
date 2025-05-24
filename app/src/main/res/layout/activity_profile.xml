@@ -1,127 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/bgbeige">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="123dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="88dp"
-        android:src="@drawable/pfp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- Toolbar -->
+        <RelativeLayout
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/bgbeige">
 
-    <ImageButton
-        android:id="@+id/edit_img"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/edit_icon"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@id/profile_image"
-        app:layout_constraintEnd_toEndOf="@id/profile_image"
-        android:layout_marginEnd="-10dp"
-        android:layout_marginBottom="-10dp" />
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="67dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:src="@drawable/baseline_arrow_back_ios_24" />
+        </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/info_section"
-        android:layout_width="407dp"
-        android:layout_height="343dp"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image">
+        <!-- Profile Image -->
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/pfp"
+            app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Name"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
+        <!-- Name Text -->
 
-        <View
-            android:layout_width="200dp"
-            android:layout_height="2dp"
-            android:layout_marginBottom="8dp"
-
-            android:background="#CCCCCC" />
+        <!-- Email Text -->
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="Brahimi hadjer"
-            android:textColor="#808080"
-            android:textSize="20sp" />
+            android:layout_marginTop="4dp"
+            android:text="Brahimi Hadjer"
+            android:textColor="#535353"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_image" />
 
         <TextView
+            android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="E-mail"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-
-        <View
-            android:layout_width="200dp"
-            android:layout_height="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="#CCCCCC" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="8dp"
             android:text="Brahimihadjer@gmail.com"
             android:textColor="#808080"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Edit Profile Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/edit_profile"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Phone Number"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:minHeight="56dp"
+            android:text="Edit Profile"
+            android:textColor="#535353"
+            app:icon="@drawable/edit_icon"
+            app:iconTint="#535353"
+            app:iconPadding="8dp"
+            app:iconGravity="start"
+            app:layout_constraintTop_toBottomOf="@id/tv_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <View
-            android:layout_width="200dp"
-            android:layout_height="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="#CCCCCC" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Fingerprint Settings Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_fingerprint_settings"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="0550623691"
-            android:textColor="#808080"
-            android:textSize="20sp" />
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:minHeight="56dp"
+            android:text="Fingerprint Settings"
+            android:textColor="#535353"
+            app:icon="@drawable/baseline_fingerprint_24"
+            app:iconTint="#535353"
+            app:iconPadding="8dp"
+            app:iconGravity="start"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    </LinearLayout>
+        <!-- Log Out Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_logout"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:minHeight="56dp"
+            android:text="Log Out"
+            android:textColor="#535353"
+            app:icon="@drawable/baseline_person_24"
+            app:iconTint="#535353"
+            app:iconPadding="8dp"
+            app:iconGravity="start"
+            app:layout_constraintTop_toBottomOf="@id/btn_fingerprint_settings"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:layout_width="145dp"
-        android:layout_height="65dp"
-        android:backgroundTint="@color/navy"
-        android:gravity="center"
-        android:text="Log out"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.921" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
