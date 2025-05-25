@@ -6,16 +6,37 @@
     android:layout_height="match_parent"
     android:background="@color/bgbeige">
 
+    <!-- Toolbar -->
+    <RelativeLayout
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/bgbeige">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="67dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:src="@drawable/baseline_arrow_back_ios_24" />
+    </RelativeLayout>
+
+    <!-- Profile Image -->
     <ImageView
         android:id="@+id/profile_image"
-        android:layout_width="123dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="4dp"
         android:src="@drawable/pfp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
 
+    <!-- Edit Image Button -->
     <ImageButton
         android:id="@+id/edit_img"
         android:layout_width="40dp"
@@ -123,18 +144,17 @@
 
 
 
+    <!-- Save Button -->
     <Button
         android:id="@+id/savebtn"
-        android:layout_width="287dp"
-        android:layout_height="60dp"
+        android:layout_width="207dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="44dp"
         android:backgroundTint="@color/navy"
-        android:gravity="center"
         android:text="Save"
         android:textColor="@android:color/white"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.864" />
+        app:layout_constraintTop_toBottomOf="@id/Password" />
 </androidx.constraintlayout.widget.ConstraintLayout>
