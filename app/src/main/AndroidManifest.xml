@@ -26,8 +26,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".screens.RegisterScreen" />
-
         <activity android:name=".screens.Edit_Profile" />
+        <activity android:name=".screens.Add_notes" />
+        <activity android:name=".screens.Note_content" />
+        <activity android:name=".screens.Profile" />
+        <activity android:name=".screens.Notes_Activity" />
     </application>
 
 </manifest>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgbeige">
+
+    <!-- Toolbar -->
+    <RelativeLayout
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/bgbeige">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="67dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:src="@drawable/baseline_arrow_back_ios_24" />
+    </RelativeLayout>
+
+    <!-- Note Title -->
+    <LinearLayout
+        android:id="@+id/noteTitleLayout"
+        android:layout_width="294dp"
+        android:layout_height="55dp"
+        android:background="@drawable/note_background"
+        android:backgroundTint="@color/beige"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/noteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Note Name"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <!-- Note Description -->
+    <LinearLayout
+        android:id="@+id/noteDescLayout"
+        android:layout_width="299dp"
+        android:layout_height="382dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/note_background"
+        android:backgroundTint="@color/beige"
+        android:orientation="vertical"
+        android:padding="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteTitleLayout">
+
+        <TextView
+            android:id="@+id/noteDesc"
+            android:layout_width="245dp"
+            android:layout_height="286dp"
+            android:text="Note description goes here"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="210dp"
+            android:layout_height="39dp"
+            android:layout_gravity="bottom|end"
+            android:gravity="end|bottom"
+            android:orientation="horizontal"
+            android:paddingTop="4dp">
+
+            <ImageButton
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Edit"
+                android:src="@drawable/baseline_edit_note_24" />
+
+            <ImageButton
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Delete"
+                android:src="@drawable/baseline_delete_24" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
