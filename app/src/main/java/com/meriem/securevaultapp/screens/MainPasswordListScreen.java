@@ -77,6 +77,7 @@ public class MainPasswordListScreen extends AppCompatActivity {
                     RealmPasswords entry = r.createObject(RealmPasswords.class, UUID.randomUUID().toString());
                     entry.setWebsite(website);
                     entry.setEmail(email);
+                    Log.d("CryptoDebug", "Before saving: " + encryptedPassword);
                     entry.setPassword(encryptedPassword);
                     Log.d("RealmDebug", "Saved entry: " + entry.getWebsite());
                 });
