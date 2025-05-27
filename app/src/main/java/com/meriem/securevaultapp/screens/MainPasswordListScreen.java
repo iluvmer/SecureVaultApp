@@ -2,6 +2,7 @@ package com.meriem.securevaultapp.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -47,8 +48,9 @@ public class MainPasswordListScreen extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewPasswords);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Realm realm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         passwordList = realm.where(RealmPasswords.class).findAll();
+        Log.d("RealmDebug", "Password list size: " + passwordList.size());
         adapter = new PasswordAdapter(passwordList);
         recyclerView.setAdapter(adapter);
 
@@ -71,14 +73,17 @@ public class MainPasswordListScreen extends AppCompatActivity {
             String password = data.getStringExtra("password");
             String encryptedPassword = CryptoHelper.encrypt(password);
             // Save password to Realm
-            Realm realm = Realm.getDefaultInstance();
-            realm.executeTransaction(realm1 -> {
-                RealmPasswords passwordEntry = realm1.createObject(RealmPasswords.class, UUID.randomUUID().toString());
-                passwordEntry.setWebsite(website);
-                passwordEntry.setEmail(email);
-                passwordEntry.setPassword(encryptedPassword);
-            });
-            realm.close();
+            new Thread(() -> {
+                Realm realm = Realm.getDefaultInstance();
+                realm.executeTransaction(r -> {
+                    RealmPasswords entry = r.createObject(RealmPasswords.class, UUID.randomUUID().toString());
+                    entry.setWebsite(website);
+                    entry.setEmail(email);
+                    entry.setPassword(encryptedPassword);
+                    Log.d("RealmDebug", "Saved entry: " + entry.getWebsite());
+                });
+                realm.close();
+            }).start();
         }
     }
     @Override

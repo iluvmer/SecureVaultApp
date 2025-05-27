@@ -32,29 +32,21 @@ public class MainActivityAfak extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         Intent intent;
-
-        switch (view.getId()) {
-            case R.id.notepadCard:
+        int id = view.getId();
+            if (id == R.id.notepadCard) {
                 // activity li n3aytolha de chaque box
-                intent = new Intent(this, .class);
+                intent = new Intent(this, Notes_Activity.class);
                 startActivity(intent);
-                break;
-
-            case R.id.cleeCard:
-                intent = new Intent(this, .class);
+            } else if ( id == R.id.cleeCard) {
+                intent = new Intent(this, PasswordEntry.class); // hedi te3 password generator
                 startActivity(intent);
-                break;
-
-            case R.id.coeurCard:
-                intent = new Intent(this, .class);
+            } else if (id == R.id.coeurCard) {
+                intent = new Intent(this, MainPasswordListScreen.class);
                 startActivity(intent);
-                break;
-
-            case R.id.settingsCard:
-                intent = new Intent(this, .class);
+            } else if (id == R.id.settingsCard) {
+                intent = new Intent(this, Profile.class);
                 startActivity(intent);
-                break;
-        }
+            }
     }
 }
 
