@@ -22,7 +22,7 @@ import java.util.List;
 
 public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.PasswordViewHolder> {
 
-    private List<RealmPasswords> passwordList;
+    private final List<RealmPasswords> passwordList;
 
     public PasswordAdapter(List<RealmPasswords> passwordList) {
         this.passwordList = passwordList;
