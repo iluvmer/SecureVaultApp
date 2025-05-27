@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+    <!-- Conteneur principal avec fond clair et coins arrondis -->
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/box_background"
+        android:padding="24dp"
+
+        android:elevation="8dp">
+
+        <!-- Titre Register centré -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:textColor="#1A2344"
+            android:textSize="24sp"
+            android:textStyle="normal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Name"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Champ Prénom avec icône -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:orientation="horizontal"
+            android:backgroundTint="#FFFFFF"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_background"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="15dp"
+                app:srcCompat="@drawable/ic_person"
+                android:layout_marginRight="8dp"/>
+
+            <EditText
+                android:id="@+id/firstNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your First Name"
+                android:paddingTop="1dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="8.5dp"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Name"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="4dp"/>
+        <!-- Champ Nom avec icône -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:orientation="horizontal"
+            android:backgroundTint="#FFFFFF"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_background"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="15dp"
+                app:srcCompat="@drawable/ic_person"
+                android:layout_marginRight="8dp"/>
+
+            <EditText
+                android:id="@+id/lastNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your Last Name"
+                android:textStyle="bold"
+                android:textSize="8.5dp"
+                android:textColor="#000000"
+                android:paddingTop="1dp"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="4dp"/>
+        <!-- Champ Email avec icône -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#FFFFFF"
+            android:background="@drawable/edittext_background"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="15dp"
+                app:srcCompat="@drawable/ic_email"
+                android:layout_marginRight="8dp"/>
+
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your Email"
+                android:textSize="8.5dp"
+                android:textStyle="bold"
+                android:paddingTop="0dp"
+                android:textColor="#000000"
+                android:inputType="textEmailAddress"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Champ Mot de passe avec icône -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:orientation="horizontal"
+            android:backgroundTint="#FFFFFF"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="15dp"
+                app:srcCompat="@drawable/ic_lock"
+                android:layout_marginRight="8dp"/>
+
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your password"
+                android:textSize="8.5dp"
+                android:textStyle="bold"
+                android:paddingTop="1dp"
+                android:textColor="#000000"
+                android:inputType="textPassword"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/enableBiometricCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enable Fingerprint Login"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:textColor="#1A2344"
+            android:textSize="8.50sp"
+            android:textStyle="bold" />
+
+        <!-- Boutons sur la même ligne avec espace -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:text="Register"
+                android:textSize="8.5dp"
+                android:paddingTop="0dp"
+                android:textStyle="normal"
+                android:gravity="center"
+                android:background="@drawable/button_background"
+                android:textColor="#FFFFFF"/>
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="1dp"/>
+
+            <Button
+                android:id="@+id/goToLoginButton"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:text="Login"
+                android:textSize="8.5dp"
+                android:paddingTop="0dp"
+                android:textStyle="normal"
+                android:gravity="center"
+                android:background="@drawable/button_background"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
