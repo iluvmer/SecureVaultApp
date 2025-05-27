@@ -3,6 +3,7 @@ package com.meriem.securevaultapp.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,9 +38,7 @@ public class PasswordDetailActivity extends AppCompatActivity {
             String website = intent.getStringExtra("website");
             String email = intent.getStringExtra("email");
             String encryptedPassword = intent.getStringExtra("password");
-
-            String decryptedPassword = CryptoHelper.decrypt(encryptedPassword);//we should decrypte so the user can see the clear password
-
+            String decryptedPassword = CryptoHelper.decrypt(encryptedPassword);
             textViewWebsite.setText("Website: " + website);
             textViewEmail.setText("Email: " + email);
             textViewPassword.setText("Password: " + decryptedPassword);
