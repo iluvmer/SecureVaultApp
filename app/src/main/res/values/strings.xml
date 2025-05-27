@@ -1,4 +1,11 @@
 <resources>
-    <string name="app_name">SecureVaultApp</string>
+    <string name="app_name">Vaultio</string>
     <string name="logo_description">Website logo</string>
+    <string name="profile_image">profile image\n</string>
+    <string name="edit_button">edit button\n</string>
+    <string name="name">name</string>
+    <string name="email">email\n</string>
+    <string name="phone">phone</string>
+    <string name="password">password</string>
+    <string name="save">save</string>
 </resources>

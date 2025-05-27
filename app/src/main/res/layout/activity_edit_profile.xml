@@ -1,51 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgbeige">
 
-    <!-- Toolbar -->
-    <RelativeLayout
-        android:id="@+id/custom_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/bgbeige">
-
-        <ImageButton
-            android:id="@+id/back_btn"
-            android:layout_width="67dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Back"
-            android:src="@drawable/baseline_arrow_back_ios_24" />
-    </RelativeLayout>
-
-    <!-- Profile Image -->
     <ImageView
         android:id="@+id/profile_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="123dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="76dp"
+        android:contentDescription="@string/profile_image"
         android:src="@drawable/pfp"
-        app:layout_constraintTop_toBottomOf="@id/custom_toolbar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Edit Image Button -->
     <ImageButton
         android:id="@+id/edit_img"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="-10dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@android:drawable/ic_menu_camera"
+        android:contentDescription="@string/edit_button"
         app:layout_constraintBottom_toBottomOf="@id/profile_image"
         app:layout_constraintEnd_toEndOf="@id/profile_image" />
 
@@ -55,20 +35,21 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Name"
+        android:hint="@string/name"
         app:layout_constraintTop_toBottomOf="@id/profile_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
-        app:startIconDrawable="@drawable/baseline_person_24"> <!-- Add your person icon here -->
+        app:startIconDrawable="@drawable/baseline_fingerprint_24"> <!-- Add your person icon here -->
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="40dp"
+            android:paddingEnd="40dp"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +59,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/email"
         app:layout_constraintTop_toBottomOf="@id/Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="40dp"
+            android:paddingEnd="40dp"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,7 +83,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Phone"
+        android:hint="@string/phone"
         app:layout_constraintTop_toBottomOf="@id/Email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,6 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="40dp"
+            android:paddingEnd="40dp"
             android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +107,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password"
         app:layout_constraintTop_toBottomOf="@id/Phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,22 +122,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="40dp"
+            android:paddingEnd="40dp"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
 
-    <!-- Save Button -->
     <Button
         android:id="@+id/savebtn"
-        android:layout_width="207dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="287dp"
+        android:layout_height="60dp"
         android:backgroundTint="@color/navy"
-        android:text="Save"
+        android:gravity="center"
+        android:text="@string/save"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Password" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.864" />
 </androidx.constraintlayout.widget.ConstraintLayout>

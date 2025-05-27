@@ -3,6 +3,7 @@ package com.meriem.securevaultapp.screens;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
+import android.util.Log;
 
 import java.security.KeyStore;
 import java.security.SecureRandom;
@@ -13,7 +14,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
 public class CryptoHelper {
-    private static final String KEY_ALIAS = "MySecureKey"; // unique name
+    private static final String KEY_ALIAS = Base64.encodeToString("secureVaultiokey".getBytes(), Base64.NO_WRAP);
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
 
     // AES + CBC + Padding
@@ -23,8 +24,8 @@ public class CryptoHelper {
     private static SecretKey getSecretKey() throws Exception {
         KeyStore keyStore = KeyStore.getInstance(ANDROID_KEY_STORE);
         keyStore.load(null);
-
         if (!keyStore.containsAlias(KEY_ALIAS)) {
+            Log.d("CryptoHelper", "Key alias not found, generating key...");
             KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE);
             keyGenerator.init(new KeyGenParameterSpec.Builder(
                     KEY_ALIAS,
@@ -34,6 +35,9 @@ public class CryptoHelper {
                     .build());
 
             keyGenerator.generateKey();
+            Log.d("CryptoHelper", "Key generated successfully.");
+        }else {
+            Log.d("CryptoHelper", "Key already exists.");
         }
 
         return ((SecretKey) keyStore.getKey(KEY_ALIAS, null));
@@ -43,14 +47,12 @@ public class CryptoHelper {
     public static String encrypt(String plainText) {
         try {
             SecretKey key = getSecretKey();
+            Log.d("CryptoHelper", "Using key: " + key.getAlgorithm());
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
 
-            // Generate random IV
-            byte[] iv = new byte[16];
-            new SecureRandom().nextBytes(iv);
-            IvParameterSpec ivSpec = new IvParameterSpec(iv);
+            cipher.init(cipher.ENCRYPT_MODE, key);
 
-            cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+            byte[] iv = cipher.getIV();
 
             byte[] encrypted = cipher.doFinal(plainText.getBytes());
 
@@ -59,9 +61,11 @@ public class CryptoHelper {
             System.arraycopy(iv, 0, combined, 0, iv.length);
             System.arraycopy(encrypted, 0, combined, iv.length, encrypted.length);
 
-            return Base64.encodeToString(combined, Base64.DEFAULT);
+            String encoded =  Base64.encodeToString(combined, Base64.DEFAULT);
+            Log.d("CryptoHelper", "Encrypted output (Base64): " + encoded);
+            return encoded;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("CryptoHelper", "Encryption failed", e);
             return plainText;
         }
     }
