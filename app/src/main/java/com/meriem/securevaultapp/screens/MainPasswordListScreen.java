@@ -15,8 +15,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.meriem.securevaultapp.R;
 import com.meriem.securevaultapp.models.RealmPasswords;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import io.realm.Realm;
