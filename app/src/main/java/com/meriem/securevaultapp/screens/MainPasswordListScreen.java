@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +50,39 @@ public class MainPasswordListScreen extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         passwordList = realm.where(RealmPasswords.class).findAll();
         Log.d("RealmDebug", "Password list size: " + passwordList.size());
-        adapter = new PasswordAdapter(passwordList);
+        adapter = new PasswordAdapter(passwordList, new PasswordAdapter.OnPasswordClickListener() {
+            @Override
+            public void onDeleteClicked(PasswordEntry password) {
+                new AlertDialog.Builder(MainPasswordListScreen.this)
+                        .setTitle("Delete Password")
+                        .setMessage("Are you sure you want to delete this password?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            int index = passwordList.indexOf(password);
+                            if (index != -1) {
+                                passwordList.remove(index);
+                                adapter.notifyItemRemoved(index);
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            }
+
+            @Override
+            public void onEditClicked(PasswordEntry password) {
+                // Show popup dialog to edit
+                int index = passwordList.indexOf(password);
+                if (index != -1) {
+                    showEditDialog(password, index);
+                }
+            }
+            @Override
+            public void onPasswordUpdated(PasswordEntry updatedEntry) {
+                int index = passwordList.indexOf(updatedEntry);
+                if (index != -1) {
+                    adapter.notifyItemChanged(index);
+                }
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         passwordList.addChangeListener(results -> adapter.notifyDataSetChanged());
@@ -93,5 +126,14 @@ public class MainPasswordListScreen extends AppCompatActivity {
         if (realm != null && !realm.isClosed()) {
             realm.close();
         }
+    }
+
+    private void showEditDialog(PasswordEntry entry, int position) {
+        EditPasswordDialog dialog = new EditPasswordDialog(this, entry, (updatedEntry) -> {
+
+            passwordList.set(position, updatedEntry);
+            adapter.notifyItemChanged(position);
+        });
+        dialog.show();
     }
 }
