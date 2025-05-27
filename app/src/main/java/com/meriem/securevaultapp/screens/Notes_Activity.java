@@ -36,10 +36,6 @@ public class Notes_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
-        addNoteBtn = findViewById(R.id.btnAddNote);
-        profilebtn = findViewById(R.id.btnProfile);
-        gridView = findViewById(R.id.notesGridView);
-
         // Get user ID FIRST
         userId = getIntent().getStringExtra("uid");
         if (userId == null || userId.isEmpty()) {
@@ -48,17 +44,26 @@ public class Notes_Activity extends AppCompatActivity {
             return;
         }
 
-        // THEN setup UI and load notes
+        // Initialize UI components
+        addNoteBtn = findViewById(R.id.btnAddNote);
+        profilebtn = findViewById(R.id.btnProfile);
+        gridView = findViewById(R.id.notesGridView);
+
+        // Set up listeners
         addNoteBtn.setOnClickListener(v -> {
             Intent intent = new Intent(Notes_Activity.this, Add_notes.class);
             intent.putExtra("uid", userId);
             startActivity(intent);
         });
 
-        profilebtn.setOnClickListener(v -> {
-            startActivity(new Intent(Notes_Activity.this, Profile.class));
-        });
+        // Load notes
+        loadNotesFromRealm();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh data when returning from Add_notes
         loadNotesFromRealm();
     }
 

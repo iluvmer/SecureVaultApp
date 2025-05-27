@@ -49,7 +49,7 @@ public class LoginScreen extends AppCompatActivity {
                             Toast.makeText(LoginScreen.this, "Login successful!", Toast.LENGTH_SHORT).show();
                             // Navigate to home screen or next screen
                             String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                            Intent intent = new Intent(LoginScreen.this, Notes_Activity.class);
+                            Intent intent = new Intent(LoginScreen.this, MainActivityAfak.class);
                             intent.putExtra("uid", uid); // Pass UID
                             startActivity(intent);
                             finish(); // optional: prevent back navigation to login
@@ -74,7 +74,7 @@ public class LoginScreen extends AppCompatActivity {
                 // Navigate to the next screen after successful authentication
                 // startActivity(new Intent(LoginScreen.this, HomeScreen.class)); // Example
                 String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                Intent intent = new Intent(LoginScreen.this, Notes_Activity.class);
+                Intent intent = new Intent(LoginScreen.this, MainActivityAfak.class);
                 intent.putExtra("uid", uid);
                 startActivity(intent);
                 finish();

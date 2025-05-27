@@ -21,12 +21,8 @@ securityCrypto = "1.1.0-alpha07"
 
 [libraries]
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
-<<<<<<< HEAD
-androidx-espresso-core = { module = "androidx.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
-=======
-androidx-espresso-core-v351 = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
->>>>>>> 7b560e8a53e1859c6c03fcc48fb52b9452d5854e
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
