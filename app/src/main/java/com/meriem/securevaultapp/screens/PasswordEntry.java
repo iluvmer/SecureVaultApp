@@ -3,7 +3,7 @@ package com.meriem.securevaultapp.screens;
 import com.meriem.securevaultapp.models.RealmPasswords;
 
 // PasswordEntry.java
-public class PasswordEntry extends RealmPasswords {
+public class PasswordEntry {
     private String website;
     private String email;
     private String password;

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.meriem.securevaultapp.R;
 import com.meriem.securevaultapp.models.RealmPasswords;
+import com.meriem.securevaultapp.models.RealmUser;
 
 import java.net.URL;
 import java.util.List;
@@ -160,8 +161,8 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
         }
     }
     public interface OnPasswordClickListener {
-        void onDeleteClicked(PasswordEntry password);
-        void onEditClicked(PasswordEntry password);
-        void onPasswordUpdated(PasswordEntry updatedEntry);
+        void onDeleteClicked(RealmPasswords password);
+        void onEditClicked(RealmPasswords password);
+        void onPasswordUpdated(RealmPasswords updatedEntry);
     }
 }

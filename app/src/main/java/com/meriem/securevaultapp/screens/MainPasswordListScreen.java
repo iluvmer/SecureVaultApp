@@ -52,15 +52,19 @@ public class MainPasswordListScreen extends AppCompatActivity {
         Log.d("RealmDebug", "Password list size: " + passwordList.size());
         adapter = new PasswordAdapter(passwordList, new PasswordAdapter.OnPasswordClickListener() {
             @Override
-            public void onDeleteClicked(PasswordEntry password) {
+            public void onDeleteClicked(RealmPasswords password) {
                 new AlertDialog.Builder(MainPasswordListScreen.this)
                         .setTitle("Delete Password")
                         .setMessage("Are you sure you want to delete this password?")
                         .setPositiveButton("Yes", (dialog, which) -> {
                             int index = passwordList.indexOf(password);
                             if (index != -1) {
-                                passwordList.remove(index);
-                                adapter.notifyItemRemoved(index);
+                                realm.executeTransaction(r -> {
+                                    RealmPasswords itemToDelete = passwordList.get(index);
+                                    if (itemToDelete != null && itemToDelete.isValid()) {
+                                        itemToDelete.deleteFromRealm();
+                                    }
+                                });
                             }
                         })
                         .setNegativeButton("Cancel", null)
@@ -68,7 +72,7 @@ public class MainPasswordListScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onEditClicked(PasswordEntry password) {
+            public void onEditClicked(RealmPasswords password) {
                 // Show popup dialog to edit
                 int index = passwordList.indexOf(password);
                 if (index != -1) {
@@ -76,7 +80,7 @@ public class MainPasswordListScreen extends AppCompatActivity {
                 }
             }
             @Override
-            public void onPasswordUpdated(PasswordEntry updatedEntry) {
+            public void onPasswordUpdated(RealmPasswords updatedEntry) {
                 int index = passwordList.indexOf(updatedEntry);
                 if (index != -1) {
                     adapter.notifyItemChanged(index);
@@ -129,10 +133,15 @@ public class MainPasswordListScreen extends AppCompatActivity {
         }
     }
 
-    private void showEditDialog(PasswordEntry entry, int position) {
+    private void showEditDialog(RealmPasswords entry, int position) {
         EditPasswordDialog dialog = new EditPasswordDialog(this, entry, (updatedEntry) -> {
 
-            passwordList.set(position, updatedEntry);
+            realm.executeTransaction(r -> {
+                RealmPasswords item = passwordList.get(position);
+                item.setWebsite(updatedEntry.getWebsite());
+                item.setEmail(updatedEntry.getEmail());
+                item.setPassword(updatedEntry.getPassword());
+            });
             adapter.notifyItemChanged(position);
         });
         dialog.show();
