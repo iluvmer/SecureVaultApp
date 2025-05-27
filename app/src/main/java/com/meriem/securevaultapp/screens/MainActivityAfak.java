@@ -38,7 +38,7 @@ public class MainActivityAfak extends AppCompatActivity implements View.OnClickL
                 intent = new Intent(this, Notes_Activity.class);
                 startActivity(intent);
             } else if ( id == R.id.cleeCard) {
-                intent = new Intent(this, PasswordEntry.class); // hedi te3 password generator
+                intent = new Intent(this, PasswordGeneratorActivity.class); // hedi te3 password generator
                 startActivity(intent);
             } else if (id == R.id.coeurCard) {
                 intent = new Intent(this, MainPasswordListScreen.class);
