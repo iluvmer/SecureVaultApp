@@ -23,9 +23,11 @@ import java.util.List;
 public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.PasswordViewHolder> {
 
     private final List<RealmPasswords> passwordList;
+    private OnPasswordClickListener listener;
 
-    public PasswordAdapter(List<RealmPasswords> passwordList) {
+    public PasswordAdapter(List<RealmPasswords> passwordList, OnPasswordClickListener listener) {
         this.passwordList = passwordList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -156,5 +158,10 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
                 }
             });
         }
+    }
+    public interface OnPasswordClickListener {
+        void onDeleteClicked(PasswordEntry password);
+        void onEditClicked(PasswordEntry password);
+        void onPasswordUpdated(PasswordEntry updatedEntry);
     }
 }
