@@ -34,7 +34,8 @@
         <activity android:name=".screens.Notes_Activity" />
         <activity android:name=".screens.AddPasswordActivity" />
         <activity android:name=".screens.PasswordDetailActivity" />
-        <activity  android:name=".screens.MainPasswordListScreen" />
+        <activity android:name=".screens.MainPasswordListScreen" />
+
 
 
 

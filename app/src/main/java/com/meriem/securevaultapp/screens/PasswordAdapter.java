@@ -15,15 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.meriem.securevaultapp.R;
+import com.meriem.securevaultapp.models.RealmPasswords;
 
 import java.net.URL;
 import java.util.List;
 
 public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.PasswordViewHolder> {
 
-    private List<PasswordEntry> passwordList;
+    private final List<RealmPasswords> passwordList;
 
-    public PasswordAdapter(List<PasswordEntry> passwordList) {
+    public PasswordAdapter(List<RealmPasswords> passwordList) {
         this.passwordList = passwordList;
     }
 
@@ -93,7 +94,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
 
     @Override
     public void onBindViewHolder(@NonNull PasswordViewHolder holder, int position) {
-        PasswordEntry entry = passwordList.get(position);
+        RealmPasswords entry = passwordList.get(position);
 
         // For favicon
         String domainForIcon = extractDomain(entry.getWebsite());
@@ -145,7 +146,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
                 Context context = itemView.getContext();
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    PasswordEntry entry = ((PasswordAdapter) ((RecyclerView) itemView.getParent()).getAdapter()).passwordList.get(position);
+                    RealmPasswords entry = ((PasswordAdapter) ((RecyclerView) itemView.getParent()).getAdapter()).passwordList.get(position);
 
                     Intent intent = new Intent(context, PasswordDetailActivity.class);
                     intent.putExtra("website", entry.getWebsite());
