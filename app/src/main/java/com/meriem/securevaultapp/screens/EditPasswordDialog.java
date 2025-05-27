@@ -6,14 +6,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.meriem.securevaultapp.R;
+import com.meriem.securevaultapp.models.RealmPasswords;
 
 public class EditPasswordDialog extends Dialog {
 
     public interface OnPasswordUpdatedListener {
-        void onPasswordUpdated(PasswordEntry updatedEntry);
+        void onPasswordUpdated(RealmPasswords updatedEntry);
     }
 
-    public EditPasswordDialog(Context context, PasswordEntry originalEntry, OnPasswordUpdatedListener listener) {
+    public EditPasswordDialog(Context context, RealmPasswords originalEntry, OnPasswordUpdatedListener listener) {
         super(context);
         setContentView(R.layout.dialog_edit_password);
 
