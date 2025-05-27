@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.meriem.securevaultapp.R;
 
+import java.util.Objects;
 import java.util.concurrent.Executor;
 
 public class LoginScreen extends AppCompatActivity {
@@ -47,6 +48,11 @@ public class LoginScreen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginScreen.this, "Login successful!", Toast.LENGTH_SHORT).show();
                             // Navigate to home screen or next screen
+                            String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                            Intent intent = new Intent(LoginScreen.this, Notes_Activity.class);
+                            intent.putExtra("uid", uid); // Pass UID
+                            startActivity(intent);
+                            finish(); // optional: prevent back navigation to login
                         } else {
                             Toast.makeText(LoginScreen.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -67,6 +73,11 @@ public class LoginScreen extends AppCompatActivity {
                 Toast.makeText(LoginScreen.this, "Fingerprint recognized!", Toast.LENGTH_SHORT).show();
                 // Navigate to the next screen after successful authentication
                 // startActivity(new Intent(LoginScreen.this, HomeScreen.class)); // Example
+                String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                Intent intent = new Intent(LoginScreen.this, Notes_Activity.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+                finish();
             }
 
             @Override

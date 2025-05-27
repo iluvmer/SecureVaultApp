@@ -29,7 +29,7 @@ public class RegisterScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Realm.init(this);
+        //Realm.init(this);
         realm = Realm.getDefaultInstance();
         mAuth = FirebaseAuth.getInstance();
 
