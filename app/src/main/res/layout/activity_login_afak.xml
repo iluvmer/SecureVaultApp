@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#FFFFFF"
+    android:background="@color/navy"
     android:padding="16dp">
 
     <!-- Conteneur principal -->
@@ -115,10 +115,10 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:text="Login"
-                android:textSize="8.5dp"
+                android:textSize="8dp"
                 android:textStyle="normal"
                 android:gravity="center"
-                android:background="@drawable/button_background"
+                android:backgroundTint="#212842"
                 android:textColor="#FFFFFF"/>
 
             <Space
@@ -130,11 +130,11 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:textSize="8.5dp"
+                android:textSize="8dp"
                 android:textStyle="normal"
                 android:gravity="center"
                 android:text="Register"
-                android:background="@drawable/button_background"
+                android:backgroundTint="#212842"
                 android:textColor="#FFFFFF"/>
         </LinearLayout>
 

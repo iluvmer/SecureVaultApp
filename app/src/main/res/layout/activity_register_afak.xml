@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#FFFFFF"
+    android:background="@color/navy"
     android:padding="16dp">
 
     <!-- Conteneur principal avec fond clair et coins arrondis -->
@@ -179,7 +179,7 @@
             android:layout_height="wrap_content"
             android:text="Enable Fingerprint Login"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="1dp"
             android:textColor="#1A2344"
             android:textSize="8.50sp"
             android:textStyle="bold" />
@@ -195,14 +195,14 @@
             <Button
                 android:id="@+id/registerButton"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:text="Register"
                 android:textSize="8.5dp"
                 android:paddingTop="0dp"
                 android:textStyle="normal"
                 android:gravity="center"
-                android:background="@drawable/button_background"
+                android:backgroundTint="#212842"
                 android:textColor="#FFFFFF"/>
 
             <Space
@@ -212,14 +212,14 @@
             <Button
                 android:id="@+id/goToLoginButton"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:text="Login"
                 android:textSize="8.5dp"
                 android:paddingTop="0dp"
                 android:textStyle="normal"
                 android:gravity="center"
-                android:background="@drawable/button_background"
+                android:backgroundTint="#212842"
                 android:textColor="#FFFFFF"/>
         </LinearLayout>
     </LinearLayout>

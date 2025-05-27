@@ -39,7 +39,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/notepad"
-                    android:tint="@color/navy"/>
+                    app:tint="@color/navy"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -64,7 +64,7 @@
                     android:layout_width="48dp"
                     android:layout_height="51dp"
                     android:src="@drawable/clee_coeur"
-                    android:tint="@color/navy" />
+                    app:tint="@color/navy" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -89,7 +89,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/coeur"
-                    android:tint="@color/navy"/>
+                    app:tint="@color/navy"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -114,7 +114,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/maintenance"
-                    android:tint="@color/navy"/>
+                    app:tint="@color/navy"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>
