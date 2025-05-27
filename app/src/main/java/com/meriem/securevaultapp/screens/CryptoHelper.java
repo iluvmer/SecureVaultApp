@@ -13,7 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
 public class CryptoHelper {
-    private static final String KEY_ALIAS = "MySecureKey"; // unique name
+    private static final String KEY_ALIAS = Base64.encodeToString("secureVaultiokey".getBytes(), Base64.NO_WRAP);
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
 
     // AES + CBC + Padding
@@ -23,7 +23,6 @@ public class CryptoHelper {
     private static SecretKey getSecretKey() throws Exception {
         KeyStore keyStore = KeyStore.getInstance(ANDROID_KEY_STORE);
         keyStore.load(null);
-
         if (!keyStore.containsAlias(KEY_ALIAS)) {
             KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE);
             keyGenerator.init(new KeyGenParameterSpec.Builder(

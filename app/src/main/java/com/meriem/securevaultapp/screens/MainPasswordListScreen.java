@@ -12,9 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.meriem.securevaultapp.R;
+import com.meriem.securevaultapp.models.RealmPasswords;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MainPasswordListScreen extends AppCompatActivity {
 
@@ -22,11 +27,13 @@ public class MainPasswordListScreen extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private PasswordAdapter adapter;
-    private List<PasswordEntry> passwordList;//we should use a bd and pu what in the list in the bd to store the passwords safely
+    private RealmResults<RealmPasswords> passwordList;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Realm.init(this);
         setContentView(R.layout.password_list);
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -40,9 +47,12 @@ public class MainPasswordListScreen extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewPasswords);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        passwordList = new ArrayList<>();
+        Realm realm = Realm.getDefaultInstance();
+        passwordList = realm.where(RealmPasswords.class).findAll();
         adapter = new PasswordAdapter(passwordList);
         recyclerView.setAdapter(adapter);
+
+        passwordList.addChangeListener(results -> adapter.notifyDataSetChanged());
 
         FloatingActionButton fab = findViewById(R.id.fabAdd);
         fab.setOnClickListener(v -> {
@@ -60,9 +70,25 @@ public class MainPasswordListScreen extends AppCompatActivity {
             String email = data.getStringExtra("email");
             String password = data.getStringExtra("password");
             String encryptedPassword = CryptoHelper.encrypt(password);
-            PasswordEntry entry = new PasswordEntry(website, email, encryptedPassword);//the password should be stored in the db cuz the adapter's job is to showcase the website name and the email and the icon but not the password so we shall have the password in the list for now :>
-            passwordList.add(entry);
-            adapter.notifyItemInserted(passwordList.size() - 1);
+            // Save password to Realm
+            Realm realm = Realm.getDefaultInstance();
+            realm.executeTransaction(realm1 -> {
+                RealmPasswords passwordEntry = realm1.createObject(RealmPasswords.class, UUID.randomUUID().toString());
+                passwordEntry.setWebsite(website);
+                passwordEntry.setEmail(email);
+                passwordEntry.setPassword(encryptedPassword);
+            });
+            realm.close();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (passwordList != null && passwordList.isValid()) {
+            passwordList.removeAllChangeListeners();
+        }
+        if (realm != null && !realm.isClosed()) {
+            realm.close();
         }
     }
 }
