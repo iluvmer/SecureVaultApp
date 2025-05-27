@@ -3,6 +3,9 @@
     <style name="Base.Theme.SecureVaultApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/navy</item>
+        <item name="colorControlActivated">@color/navy</item>
+
     </style>
 
     <style name="Theme.SecureVaultApp" parent="Base.Theme.SecureVaultApp" />
