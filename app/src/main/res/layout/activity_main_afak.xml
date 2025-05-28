@@ -16,19 +16,21 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="4dp"
             android:src="@drawable/ic_person"
-            app:tint="@color/beige"
-            android:layout_marginEnd="6dp"/>
+            app:tint="@color/beige" />
 
         <TextView
             android:id="@+id/headerLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello, Afak"
+            android:text="Hello, Username"
             android:textColor="@color/beige"
-            android:textSize="25sp"
+            android:textSize="35sp"
             android:textStyle="bold"
             android:fontFamily="@font/lobster" />
     </LinearLayout>
@@ -82,8 +84,10 @@
                 android:text="Notes"
                 android:textColor="@color/beige"
                 android:textStyle="normal"
-                android:textSize="18sp"
-                android:layout_marginTop="6dp"/>
+                android:layout_marginTop="6dp"
+                android:textSize="22sp"
+                android:fontFamily="@font/lobster"/>
+
         </LinearLayout>
 
         <!-- Boîte 2 - Clé -->
@@ -120,11 +124,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Password Generator"
+                android:text="Pass-Generator"
                 android:textColor="@color/beige"
                 android:textStyle="normal"
-                android:textSize="17sp"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="4dp"
+                android:textSize="22sp"
+                android:fontFamily="@font/lobster"/>
         </LinearLayout>
 
         <!-- Boîte 3 - Cœur -->
@@ -161,10 +166,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Main Password"
+                android:text="Passwords"
                 android:textColor="@color/beige"
                 android:textStyle="normal"
-                android:textSize="17sp"
+                android:textSize="22sp"
+                android:fontFamily="@font/lobster"
                 android:layout_marginTop="4dp"/>
         </LinearLayout>
 
@@ -174,7 +180,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="17dp"
             android:layout_marginTop="9dp">
 
             <androidx.cardview.widget.CardView
@@ -206,7 +212,8 @@
                 android:text="Settings"
                 android:textColor="@color/beige"
                 android:textStyle="normal"
-                android:textSize="17sp"
+                android:textSize="22sp"
+                android:fontFamily="@font/lobster"
                 android:layout_marginTop="4dp"/>
         </LinearLayout>
     </GridLayout>
