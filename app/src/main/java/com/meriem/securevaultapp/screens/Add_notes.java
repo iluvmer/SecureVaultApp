@@ -46,7 +46,6 @@ public class Add_notes extends AppCompatActivity {
         noteContentEditText = findViewById(R.id.NoteContent); // Directly get the EditText with ID NoteContent
 
         saveButton = findViewById(R.id.buttonSave);
-        cancelButton = findViewById(R.id.buttonCancel);
         ImageButton go_back=findViewById(R.id.back_btn);
 
         go_back.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +92,5 @@ public class Add_notes extends AppCompatActivity {
         });
 
 
-        cancelButton.setOnClickListener(v -> {
-            finish();
-        });
     }
 }

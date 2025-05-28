@@ -28,7 +28,7 @@ import io.realm.RealmResults;
 
 public class Notes_Activity extends AppCompatActivity {
     private GridView gridView;
-    private ImageButton addNoteBtn, profilebtn;
+    private ImageButton addNoteBtn;
     private String userId;
 
     @Override
@@ -46,7 +46,7 @@ public class Notes_Activity extends AppCompatActivity {
 
         // Initialize UI components
         addNoteBtn = findViewById(R.id.btnAddNote);
-        profilebtn = findViewById(R.id.btnProfile);
+
         gridView = findViewById(R.id.notesGridView);
 
         // Set up listeners

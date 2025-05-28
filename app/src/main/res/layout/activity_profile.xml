@@ -41,9 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:scaleType="centerCrop" />
 
-        <!-- Name Text -->
-
-        <!-- Email Text -->
 
         <TextView
             android:id="@+id/tv_name"
@@ -74,38 +71,20 @@
             android:id="@+id/edit_profile"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_marginTop="40dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:minHeight="56dp"
             android:text="Edit Profile"
             android:textColor="#535353"
-            app:icon="@drawable/edit_icon"
+            app:icon="@drawable/baseline_edit_24"
             app:iconTint="#535353"
             app:iconPadding="8dp"
             app:iconGravity="start"
+            app:strokeColor="#8F8F8F"
+            app:strokeWidth="2dp"
             app:layout_constraintTop_toBottomOf="@id/tv_email"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Fingerprint Settings Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_fingerprint_settings"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:minHeight="56dp"
-            android:text="Fingerprint Settings"
-            android:textColor="#535353"
-            app:icon="@drawable/baseline_fingerprint_24"
-            app:iconTint="#535353"
-            app:iconPadding="8dp"
-            app:iconGravity="start"
-            app:layout_constraintTop_toBottomOf="@id/edit_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -114,7 +93,7 @@
             android:id="@+id/btn_logout"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_marginTop="16dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
@@ -125,9 +104,59 @@
             app:iconTint="#535353"
             app:iconPadding="8dp"
             app:iconGravity="start"
-            app:layout_constraintTop_toBottomOf="@id/btn_fingerprint_settings"
+            app:strokeColor="#8F8F8F"
+            app:strokeWidth="2dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_report"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:minHeight="56dp"
+            android:text="Report"
+            android:textColor="#535353"
+            app:icon="@drawable/baseline_error_24"
+            app:iconTint="#535353"
+            app:iconPadding="8dp"
+            app:iconGravity="start"
+            app:strokeColor="#8F8F8F"
+            app:strokeWidth="2dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_logout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_contact"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:minHeight="56dp"
+            android:text="Contact Us"
+            android:textColor="#535353"
+            app:icon="@mipmap/contactus_foreground"
+            app:iconTint="#535353"
+            app:iconPadding="8dp"
+            app:iconGravity="start"
+            app:strokeColor="#8F8F8F"
+            app:strokeWidth="2dp"
+            app:iconSize="28dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_report"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

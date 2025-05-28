@@ -41,7 +41,7 @@ public class Profile extends AppCompatActivity {
         Button edit = findViewById(R.id.edit_profile);
         ImageButton go_back = findViewById(R.id.back_btn);
         Button btnLogout = findViewById(R.id.btn_logout);
-        Button btnFingerprint = findViewById(R.id.btn_fingerprint_settings);
+
 
         // Initialize Realm
         realm = Realm.getDefaultInstance();
@@ -73,10 +73,7 @@ public class Profile extends AppCompatActivity {
             Toast.makeText(Profile.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
         });
 
-        btnFingerprint.setOnClickListener(v -> {
-            // Handle fingerprint settings
-            // Add your fingerprint implementation here
-        });
+
     }
 
     private void loadUserData() {
