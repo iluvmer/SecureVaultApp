@@ -8,4 +8,8 @@
     <string name="phone">phone</string>
     <string name="password">password</string>
     <string name="save">save</string>
+    <string name="website">Website</string>
+    <string name="email_example_com">email@example.com</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
