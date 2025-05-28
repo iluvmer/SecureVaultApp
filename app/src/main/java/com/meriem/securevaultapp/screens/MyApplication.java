@@ -2,8 +2,10 @@ package com.meriem.securevaultapp.screens;
 
 import android.app.Application;
 
+import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmMigration;
 
 public class MyApplication extends Application {
     @Override
@@ -12,8 +14,15 @@ public class MyApplication extends Application {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("vault.realm")
-                .schemaVersion(1)
+                .schemaVersion(5)
                 .deleteRealmIfMigrationNeeded() // Use only during development
+                .migration(new RealmMigration() {
+                    @Override
+                    public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
+                        // Add any migration logic if needed
+                    }
+                })
+                .allowWritesOnUiThread(true)  // Crucial for UI thread operations
                 .allowQueriesOnUiThread(true)
                 .build();
 

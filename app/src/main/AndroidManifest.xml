@@ -20,7 +20,7 @@
             android:exported="true">
         </activity>
 
-        <activity android:name=".screens.MainActivityAfak"
+        <activity android:name=".screens.LoginScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,6 +36,8 @@
         <activity android:name=".screens.AddPasswordActivity" />
         <activity android:name=".screens.PasswordDetailActivity" />
         <activity android:name=".screens.MainPasswordListScreen" />
+        <activity android:name=".screens.MainActivityAfak" />
+        <activity android:name=".screens.FingerprintActivity" />
 
 
 

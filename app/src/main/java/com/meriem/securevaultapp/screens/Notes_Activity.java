@@ -58,6 +58,7 @@ public class Notes_Activity extends AppCompatActivity {
 
         // Load notes
         loadNotesFromRealm();
+
     }
 
     @Override
