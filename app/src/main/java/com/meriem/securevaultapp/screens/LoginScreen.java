@@ -2,6 +2,9 @@ package com.meriem.securevaultapp.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,9 +15,14 @@ import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.meriem.securevaultapp.R;
+import com.meriem.securevaultapp.models.RealmUser;
 
+import java.util.Objects;
 import java.util.concurrent.Executor;
+
+import io.realm.Realm;
 
 public class LoginScreen extends AppCompatActivity {
     EditText emailEditText, passwordEditText;
@@ -23,12 +31,15 @@ public class LoginScreen extends AppCompatActivity {
     Executor executor;
     BiometricPrompt biometricPrompt;
     BiometricPrompt.PromptInfo promptInfo;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_afak);
 
+        // Initialize Realm
+        realm = Realm.getDefaultInstance();
         mAuth = FirebaseAuth.getInstance();
 
         emailEditText = findViewById(R.id.emailEditText);
@@ -45,10 +56,16 @@ public class LoginScreen extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(LoginScreen.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                            // Navigate to home screen or next screen
+                            String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
+                            // Add delay to ensure Realm sync
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                checkRealmUser(uid);
+                            }, 500);
                         } else {
-                            Toast.makeText(LoginScreen.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginScreen.this,
+                                    "Login failed: " + task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
         });
@@ -65,8 +82,14 @@ public class LoginScreen extends AppCompatActivity {
             public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(LoginScreen.this, "Fingerprint recognized!", Toast.LENGTH_SHORT).show();
-                // Navigate to the next screen after successful authentication
-                // startActivity(new Intent(LoginScreen.this, HomeScreen.class)); // Example
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (firebaseUser != null) {
+                    String uid = firebaseUser.getUid();
+                    // Check Realm user for biometric login too
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        checkRealmUser(uid);
+                    }, 500);
+                }
             }
 
             @Override
@@ -96,5 +119,39 @@ public class LoginScreen extends AppCompatActivity {
                 Toast.makeText(this, "Biometric authentication is not available on this device", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void checkRealmUser(String uid) {
+        try (Realm localRealm = Realm.getDefaultInstance()) {
+            RealmUser user = localRealm.where(RealmUser.class)
+                    .equalTo("uid", uid.trim())
+                    .findFirst();
+
+            if (user != null) {
+                Log.d("Login", "Realm user data - UID: " + user.getUid());
+                Log.d("Login", "Email: " + user.getEmail());
+                Log.d("Login", "Name: " + user.getFirstName() + " " + user.getLastName());
+
+                Intent intent = new Intent(LoginScreen.this, MainActivityAfak.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+                finish();
+            } else {
+                Log.e("Login", "User NOT FOUND in Realm");
+                Toast.makeText(this, "User data missing. Please register again.", Toast.LENGTH_LONG).show();
+                FirebaseAuth.getInstance().signOut();
+            }
+        } catch (Exception e) {
+            Log.e("Login", "Realm error", e);
+            Toast.makeText(this, "Error accessing user data", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (realm != null && !realm.isClosed()) {
+            realm.close();
+        }
     }
 }

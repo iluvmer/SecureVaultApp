@@ -10,63 +10,105 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.meriem.securevaultapp.R;
+import com.meriem.securevaultapp.models.RealmNote;
+import com.meriem.securevaultapp.models.RealmUser;
+import com.meriem.securevaultapp.helpers.EncryptionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+
 public class Notes_Activity extends AppCompatActivity {
     private GridView gridView;
-    private ImageButton addNoteBtn, profilebtn;
+    private ImageButton addNoteBtn;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
+        // Get user ID FIRST
+        userId = getIntent().getStringExtra("uid");
+        if (userId == null || userId.isEmpty()) {
+            Toast.makeText(this, "No user ID received", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        // Initialize UI components
         addNoteBtn = findViewById(R.id.btnAddNote);
-        profilebtn = findViewById(R.id.btnProfile);
-
-        addNoteBtn.setOnClickListener(v -> {
-            startActivity(new Intent(Notes_Activity.this, Add_notes.class));
-        });
-
-        profilebtn.setOnClickListener(v -> {
-            startActivity(new Intent(Notes_Activity.this, Profile.class));
-        });
 
         gridView = findViewById(R.id.notesGridView);
 
-        ArrayList<String> noteTitles = new ArrayList<>();
-        ArrayList<String> noteDescriptions = new ArrayList<>();
+        // Set up listeners
+        addNoteBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Notes_Activity.this, Add_notes.class);
+            intent.putExtra("uid", userId);
+            startActivity(intent);
+        });
 
-        noteTitles.add("Shopping list");
-        noteDescriptions.add("Eggs, milk, bread...");
+        // Load notes
+        loadNotesFromRealm();
 
-        noteTitles.add("To-Do");
-        noteDescriptions.add("Finish project, call mom...");
+    }
 
-        noteTitles.add("Ideas");
-        noteDescriptions.add("New app for recipes...");
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh data when returning from Add_notes
+        loadNotesFromRealm();
+    }
 
-        noteTitles.add("Passwords");
-        noteDescriptions.add("Email: pass1234...");
+    private void loadNotesFromRealm() {
+        if (userId == null || userId.isEmpty()) {
+            Toast.makeText(this, "User ID not available", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        noteTitles.add("Books");
-        noteDescriptions.add("1984, Brave New World...");
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            RealmResults<RealmNote> notes = realm.where(RealmNote.class)
+                    .equalTo("userId", userId)
+                    .findAll();
 
-        noteTitles.add("Reminders");
-        noteDescriptions.add("Doctor appointment at 4pm...");
+            ArrayList<String> noteTitles = new ArrayList<>();
+            ArrayList<String> noteDescriptions = new ArrayList<>();
 
-        NoteAdapter adapter = new NoteAdapter(this, noteTitles, noteDescriptions);
-        gridView.setAdapter(adapter);
+            for (RealmNote note : notes) {
+                try {
+                    String decryptedTitle = EncryptionUtils.decrypt(note.getEncryptedTitle());
+                    String decryptedContent = EncryptionUtils.decrypt(note.getEncryptedContent());
+
+                    noteTitles.add(decryptedTitle != null ? decryptedTitle : "[No Title]");
+                    noteDescriptions.add(decryptedContent != null ? decryptedContent : "[No Content]");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    noteTitles.add("[Decryption Error]");
+                    noteDescriptions.add("[Decryption Error]");
+                }
+            }
+
+            NoteAdapter adapter = new NoteAdapter(this, noteTitles, noteDescriptions);
+            gridView.setAdapter(adapter);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error loading notes: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        } finally {
+            realm.close();
+        }
     }
 
     public class NoteAdapter extends BaseAdapter {
-
         private Context context;
         private List<String> titles;
         private List<String> descriptions;
@@ -110,7 +152,6 @@ public class Notes_Activity extends AppCompatActivity {
             noteTitle.setText(title);
             noteDesc.setText(description);
 
-            // Click listener on the entire item
             view.setOnClickListener(v -> {
                 Intent intent = new Intent(context, Note_content.class);
                 intent.putExtra("title", title);
@@ -120,6 +161,5 @@ public class Notes_Activity extends AppCompatActivity {
 
             return view;
         }
-
     }
 }

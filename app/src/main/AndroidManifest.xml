@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -35,7 +36,7 @@
         <activity android:name=".screens.AddPasswordActivity" />
         <activity android:name=".screens.PasswordDetailActivity" />
         <activity android:name=".screens.MainPasswordListScreen" />
-        <activity android:name=".screens.PasswordGeneratorActivity" />
+
 
 
 

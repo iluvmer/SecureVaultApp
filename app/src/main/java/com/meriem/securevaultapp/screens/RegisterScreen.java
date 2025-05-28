@@ -3,6 +3,7 @@ package com.meriem.securevaultapp.screens;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.meriem.securevaultapp.R;
 import com.meriem.securevaultapp.models.RealmUser;
+
+import java.util.Objects;
 
 import io.realm.Realm;
 
@@ -27,9 +30,9 @@ public class RegisterScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_afak);
 
-        Realm.init(this);
+        //Realm.init(this);
         realm = Realm.getDefaultInstance();
         mAuth = FirebaseAuth.getInstance();
 
@@ -46,24 +49,24 @@ public class RegisterScreen extends AppCompatActivity {
             String password = passwordEditText.getText().toString();
             String firstName = firstNameEditText.getText().toString();
             String lastName = lastNameEditText.getText().toString();
-            boolean enableBiometric = enableBiometricCheckbox.isChecked();
+
+            Log.d("Register", "Attempting register: " + email + ", Name: " + firstName + " " + lastName);
 
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                            if (firebaseUser != null) {
-                                saveUserToRealm(firebaseUser.getUid(), email, firstName, lastName, enableBiometric);
+                            String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                            Log.d("Register", "Firebase auth success! UID: " + uid);
 
-                                if (enableBiometric) {
-                                    saveBiometricEnabled(email);
-                                }
-                                Toast.makeText(this, "Registered successfully!", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(this, LoginScreen.class));
-                                finish();
-                            }
+                            saveUserToRealm(uid, email, firstName, lastName, false); // Save to Realm
+                            Toast.makeText(this, "Registered!", Toast.LENGTH_SHORT).show();
+
+                            // Proceed to login
+                            startActivity(new Intent(this, LoginScreen.class));
+                            finish();
                         } else {
-                            Toast.makeText(this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("Register", "Registration failed", task.getException());
+                            Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
                         }
                     });
         });
@@ -72,13 +75,21 @@ public class RegisterScreen extends AppCompatActivity {
     }
 
     private void saveUserToRealm(String uid, String email, String firstName, String lastName, boolean useFingerprintLogin) {
-        realm.executeTransaction(r -> {
-            RealmUser user = r.createObject(RealmUser.class, uid);
-            user.setEmail(email);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setUseFingerprintLogin(useFingerprintLogin);
+        realm.executeTransaction(realm -> {
+            // Create new object using constructor
+            RealmUser user = new RealmUser(uid, email, firstName, lastName);
+            realm.copyToRealmOrUpdate(user);
+
+            // Immediate verification
+            RealmUser verifiedUser = realm.where(RealmUser.class)
+                    .equalTo("uid", uid)
+                    .findFirst();
+            Log.d("Register", "Verified UID: " + verifiedUser.getUid());
+            Log.d("Register", "Verified Email: " + verifiedUser.getEmail());
         });
+
+        startActivity(new Intent(this, LoginScreen.class));
+        finish();
     }
 
 
