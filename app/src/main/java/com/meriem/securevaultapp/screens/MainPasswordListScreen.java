@@ -21,11 +21,11 @@ import java.util.UUID;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+
 public class MainPasswordListScreen extends AppCompatActivity {
 
     private static final int ADD_PASSWORD_REQUEST_CODE = 1;
 
-    private RecyclerView recyclerView;
     private PasswordAdapter adapter;
     private RealmResults<RealmPasswords> passwordList;
     private Realm realm;
@@ -39,12 +39,12 @@ public class MainPasswordListScreen extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed(); // or use finish();
+                getOnBackPressedDispatcher().onBackPressed();
             }
         });
 
 
-        recyclerView = findViewById(R.id.recyclerViewPasswords);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewPasswords);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         realm = Realm.getDefaultInstance();
@@ -57,33 +57,37 @@ public class MainPasswordListScreen extends AppCompatActivity {
                         .setTitle("Delete Password")
                         .setMessage("Are you sure you want to delete this password?")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            int index = passwordList.indexOf(password);
-                            if (index != -1) {
-                                realm.executeTransaction(r -> {
-                                    RealmPasswords itemToDelete = passwordList.get(index);
-                                    if (itemToDelete != null && itemToDelete.isValid()) {
-                                        itemToDelete.deleteFromRealm();
-                                    }
-                                });
-                            }
+                            String uidToDelete = password.getUid();
+                            new Thread(() -> {
+                                try (Realm bgRealm = Realm.getDefaultInstance()) {
+                                    bgRealm.executeTransaction(r -> {
+                                        RealmPasswords itemToDelete = r.where(RealmPasswords.class)
+                                                .equalTo("uid", uidToDelete)
+                                                .findFirst();
+
+                                        if (itemToDelete != null && itemToDelete.isValid()) {
+                                            itemToDelete.deleteFromRealm();
+                                            Log.d("Debug", "Successfully deleted: " + uidToDelete);
+                                        } else {
+                                            Log.d("Debug", "Item not found or already deleted: " + uidToDelete);
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                    Log.e("Debug", "Exception during deletion", e);
+                                }
+                            }).start();
+
                         })
                         .setNegativeButton("Cancel", null)
                         .show();
-            }
 
+
+            }
             @Override
             public void onEditClicked(RealmPasswords password) {
-                // Show popup dialog to edit
-                int index = passwordList.indexOf(password);
-                if (index != -1) {
-                    showEditDialog(password, index);
-                }
-            }
-            @Override
-            public void onPasswordUpdated(RealmPasswords updatedEntry) {
-                int index = passwordList.indexOf(updatedEntry);
-                if (index != -1) {
-                    adapter.notifyItemChanged(index);
+                String uidToDelete = password.getUid();
+                if (uidToDelete != null) {
+                    showEditDialog(password);
                 }
             }
         });
@@ -133,17 +137,43 @@ public class MainPasswordListScreen extends AppCompatActivity {
         }
     }
 
-    private void showEditDialog(RealmPasswords entry, int position) {
-        EditPasswordDialog dialog = new EditPasswordDialog(this, entry, (updatedEntry) -> {
+    private void showEditDialog(RealmPasswords entry) {
+        // Make a copy from Realm-managed object to use inside the new background thread ;)
+        RealmPasswords detachedEntry;
+        try {
+            detachedEntry = realm.copyFromRealm(entry); // <- This makes it safe
+        } catch (Exception e) {
+            Log.e("EditError", "Failed to copy Realm object", e);
+            return;
+        }
+        String uidToEdit = detachedEntry.getUid(); // hna we use a copy of entry bcs it's thread confined to UI thread and we want to use detached copy inside the other thread :D
+        EditPasswordDialog dialog = new EditPasswordDialog(this, detachedEntry, (updatedEntry) -> {
+            String newEmail = updatedEntry.getEmail();
+            String newPassword = updatedEntry.getPassword();
 
-            realm.executeTransaction(r -> {
-                RealmPasswords item = passwordList.get(position);
-                item.setWebsite(updatedEntry.getWebsite());
-                item.setEmail(updatedEntry.getEmail());
-                item.setPassword(updatedEntry.getPassword());
-            });
-            adapter.notifyItemChanged(position);
+            Log.d("EditDebug", "New values: " + updatedEntry.getWebsite() + ", " + newEmail + ", " + newPassword);
+
+            new Thread(() -> {
+                try (Realm bgRealm = Realm.getDefaultInstance()) {
+                    bgRealm.executeTransaction(r -> {
+                        RealmPasswords itemToEdit = r.where(RealmPasswords.class)
+                                .equalTo("uid", uidToEdit)
+                                .findFirst();
+                        if (itemToEdit != null && itemToEdit.isValid()) {
+                            itemToEdit.setEmail(newEmail);
+                            itemToEdit.setPassword(newPassword);
+                            Log.d("EditDebug", "Successfully edited: " + uidToEdit);
+                        } else {
+                            Log.d("EditDebug", "Item not found or already deleted: " + uidToEdit);
+                        }
+                    });
+                    runOnUiThread(() -> adapter.notifyDataSetChanged());
+                } catch (Exception e) {
+                    Log.e("EditError", "Failed to edit item", e);
+                }
+            }).start();
         });
+
         dialog.show();
     }
 }

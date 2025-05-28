@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.meriem.securevaultapp.R;
 import com.meriem.securevaultapp.models.RealmPasswords;
-import com.meriem.securevaultapp.models.RealmUser;
 
 import java.net.URL;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.List;
 public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.PasswordViewHolder> {
 
     private final List<RealmPasswords> passwordList;
-    private OnPasswordClickListener listener;
+    private final OnPasswordClickListener listener;
 
     public PasswordAdapter(List<RealmPasswords> passwordList, OnPasswordClickListener listener) {
         this.passwordList = passwordList;
@@ -121,10 +121,23 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
                     ((Activity) holder.logoImageView.getContext()).runOnUiThread(() -> holder.logoImageView.setImageResource(R.drawable.ic_default_logo));
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("PasswordAdapter", e.getMessage(), e);
                 ((Activity) holder.logoImageView.getContext()).runOnUiThread(() -> holder.logoImageView.setImageResource(R.drawable.ic_default_logo));
             }
         }).start();
+
+        holder.editButton.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onEditClicked(entry);
+            }
+        });
+
+        holder.deleteButton.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDeleteClicked(entry);
+            }
+        });
+
     }
 
 
@@ -138,13 +151,15 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
     public static class PasswordViewHolder extends RecyclerView.ViewHolder {
         TextView websiteTextView, emailTextView;
         ImageView logoImageView;
+        ImageView deleteButton, editButton;
 
         public PasswordViewHolder(@NonNull View itemView) {
             super(itemView);
             websiteTextView = itemView.findViewById(R.id.textViewWebsite);
             emailTextView = itemView.findViewById(R.id.textViewEmail);
             logoImageView = itemView.findViewById(R.id.imageViewLogo);
-
+            deleteButton = itemView.findViewById(R.id.btnDelete);
+            editButton = itemView.findViewById(R.id.btnEdit);
             itemView.setOnClickListener(v -> {
                 Context context = itemView.getContext();
                 int position = getAdapterPosition();
@@ -163,6 +178,5 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
     public interface OnPasswordClickListener {
         void onDeleteClicked(RealmPasswords password);
         void onEditClicked(RealmPasswords password);
-        void onPasswordUpdated(RealmPasswords updatedEntry);
     }
 }
