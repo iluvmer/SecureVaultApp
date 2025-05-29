@@ -58,9 +58,10 @@ public class MainActivityAfak extends AppCompatActivity implements View.OnClickL
                     .findFirst();
 
             if (user != null) {
-                String fullName = user.getFirstName() + " " + user.getLastName();
+                String firstName = user.getFirstName();
+                String greeting = "Hello, " + firstName;
                 runOnUiThread(() -> {
-                    headerText.setText("Hello, " + fullName);
+                    headerText.setText(greeting);
                 });
             }
         }, error -> {
