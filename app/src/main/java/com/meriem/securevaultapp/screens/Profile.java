@@ -41,7 +41,7 @@ public class Profile extends AppCompatActivity {
         Button edit = findViewById(R.id.edit_profile);
         ImageButton go_back = findViewById(R.id.back_btn);
         Button btnLogout = findViewById(R.id.btn_logout);
-
+       // Button btnFingerprint = findViewById(R.id.btn_fingerprint_settings);
 
         // Initialize Realm
         realm = Realm.getDefaultInstance();

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +19,18 @@ import io.realm.Realm;
 
 public class MainActivityAfak extends AppCompatActivity implements View.OnClickListener {
     private String uid;
+    private TextView headerText;
+    private Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_afak);
 
+        // Initialize Realm
+        realm = Realm.getDefaultInstance();
+
+        // Initialize views
+        headerText = findViewById(R.id.headerLayout);
 
         // Receive UID from LoginScreen
         uid = getIntent().getStringExtra("uid");
@@ -31,6 +39,7 @@ public class MainActivityAfak extends AppCompatActivity implements View.OnClickL
             finish();
             return;
         }
+        displayUserName();
 
         CardView notepadCard = findViewById(R.id.notepadCard);
         CardView cleeCard = findViewById(R.id.cleeCard);
@@ -41,6 +50,33 @@ public class MainActivityAfak extends AppCompatActivity implements View.OnClickL
         cleeCard.setOnClickListener(this);
         coeurCard.setOnClickListener(this);
         settingsCard.setOnClickListener(this);
+    }
+    private void displayUserName() {
+        realm.executeTransactionAsync(realm -> {
+            RealmUser user = realm.where(RealmUser.class)
+                    .equalTo("uid", uid.trim())
+                    .findFirst();
+
+            if (user != null) {
+                String fullName = user.getFirstName() + " " + user.getLastName();
+                runOnUiThread(() -> {
+                    headerText.setText("Hello, " + fullName);
+                });
+            }
+        }, error -> {
+            Log.e("MainActivity", "Error loading user: " + error.getMessage());
+            runOnUiThread(() -> {
+                headerText.setText("Hello, User");
+            });
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (realm != null) {
+            realm.close();
+        }
     }
 
     @Override

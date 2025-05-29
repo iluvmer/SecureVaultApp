@@ -3,6 +3,7 @@ package com.meriem.securevaultapp.screens;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import io.realm.RealmResults;
 
 public class Notes_Activity extends AppCompatActivity {
     private GridView gridView;
-    private ImageButton addNoteBtn;
+    private ImageButton addNoteBtn, profilebtn;
     private String userId;
 
     @Override
@@ -46,13 +47,19 @@ public class Notes_Activity extends AppCompatActivity {
 
         // Initialize UI components
         addNoteBtn = findViewById(R.id.btnAddNote);
-
+       // profilebtn = findViewById(R.id.btnProfile);
         gridView = findViewById(R.id.notesGridView);
 
         // Set up listeners
         addNoteBtn.setOnClickListener(v -> {
+            Log.d("NotesActivity", "Add Note button clicked!"); // Debug log
+
             Intent intent = new Intent(Notes_Activity.this, Add_notes.class);
             intent.putExtra("uid", userId);
+
+            // Verify intent before starting
+            Log.d("NotesActivity", "Starting Add_notes with UID: " + userId);
+
             startActivity(intent);
         });
 
@@ -156,6 +163,7 @@ public class Notes_Activity extends AppCompatActivity {
                 Intent intent = new Intent(context, Note_content.class);
                 intent.putExtra("title", title);
                 intent.putExtra("description", description);
+                intent.putExtra("uid", userId);
                 context.startActivity(intent);
             });
 

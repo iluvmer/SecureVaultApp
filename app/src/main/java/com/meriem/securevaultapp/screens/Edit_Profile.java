@@ -1,6 +1,7 @@
 package com.meriem.securevaultapp.screens;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -71,17 +72,15 @@ public class Edit_Profile extends AppCompatActivity {
                 return;
             }
 
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             if (!newPassword.isEmpty() && newPassword.length() < 6) {
                 Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            updateUserProfile(name, email, phone, newPassword);
+            updateUserProfile(name, phone, newPassword);
+        });
+        editEmail.setOnClickListener(v -> {
+            Toast.makeText(this, R.string.email_locked_message, Toast.LENGTH_LONG).show();
         });
     }
 
@@ -112,41 +111,19 @@ public class Edit_Profile extends AppCompatActivity {
         }
     }
 
-    private void updateUserProfile(String name, String email, String phone, String newPassword) {
+    private void updateUserProfile(String name, String phone, String newPassword) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser == null) {
             Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // First update email in Firebase if changed
-        if (!email.equals(firebaseUser.getEmail())) {
-            updateFirebaseEmail(firebaseUser, email, name, phone, newPassword);
-        }
-        // If email didn't change but password did
-        else if (!newPassword.isEmpty()) {
+        // Only handle password changes if needed
+        if (!newPassword.isEmpty()) {
             showReauthenticationDialog(newPassword);
+        } else {
+            updateRealmProfile(name, firebaseUser.getEmail(), phone);
         }
-        // Only profile data changed
-        else {
-            updateRealmProfile(name, email, phone);
-        }
-    }
-
-    private void updateFirebaseEmail(FirebaseUser user, String newEmail, String name, String phone, String newPassword) {
-        user.verifyBeforeUpdateEmail(newEmail)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (!newPassword.isEmpty()) {
-                            showReauthenticationDialog(newPassword);
-                        } else {
-                            updateRealmProfile(name, newEmail, phone);
-                        }
-                    } else {
-                        Toast.makeText(this, "Email update failed: " +
-                                task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     private void updateRealmProfile(String name, String email, String phone) {

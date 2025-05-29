@@ -37,16 +37,12 @@ public class Add_notes extends AppCompatActivity {
         }
 
 
-        // Get the TextInputLayouts
-        TextInputLayout titleLayout = findViewById(R.id.NoteTitle);
-        TextInputLayout contentLayout = findViewById(R.id.noteContentLayout);
-
-        // Get the EditTexts from the layouts
-        noteTitleEditText = (TextInputEditText) titleLayout.getEditText();
-        noteContentEditText = findViewById(R.id.NoteContent); // Directly get the EditText with ID NoteContent
+        // CORRECT: Get the EditTexts directly from their IDs
+        noteTitleEditText = findViewById(R.id.NoteTitle);  // This is the TextInputEditText
+        noteContentEditText = findViewById(R.id.NoteContent);  // This is the TextInputEditText
 
         saveButton = findViewById(R.id.buttonSave);
-        ImageButton go_back=findViewById(R.id.back_btn);
+        ImageButton go_back = findViewById(R.id.back_btn);
 
         go_back.setOnClickListener(new View.OnClickListener() {
             @Override

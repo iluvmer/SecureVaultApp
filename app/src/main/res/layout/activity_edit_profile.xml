@@ -86,7 +86,9 @@
             android:layout_height="wrap_content"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:enabled="false"
+            android:textColor="@color/gray"/>/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Phone -->
