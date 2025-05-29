@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/noteTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="85dp"
             android:layout_height="5dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
@@ -40,20 +40,12 @@
             android:textSize="12sp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:gravity="end|bottom"
             android:orientation="horizontal"
             android:paddingTop="4dp">
-
-            <ImageButton
-                android:id="@+id/editButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Edit"
-                android:src="@drawable/baseline_edit_note_24" />
 
             <ImageButton
                 android:id="@+id/deleteButton"
