@@ -3,6 +3,7 @@ package com.meriem.securevaultapp.screens;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,8 +89,15 @@ public class PasswordGeneratorActivity extends AppCompatActivity {
             password.append(charPool.charAt(index));
         }
 
+        String generatedPassword = password.toString();
+
         generatedPasswordTextView.setText(password.toString());
         updateStrengthIndicator(password.toString());
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("generatedPassword", generatedPassword);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     private void updateStrengthIndicator(String password) {
