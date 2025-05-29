@@ -29,7 +29,7 @@ import io.realm.RealmResults;
 
 public class Notes_Activity extends AppCompatActivity {
     private GridView gridView;
-    private ImageButton addNoteBtn, profilebtn;
+    private ImageButton addNoteBtn, profilebtn,go_back;
     private String userId;
 
     @Override
@@ -49,6 +49,19 @@ public class Notes_Activity extends AppCompatActivity {
         addNoteBtn = findViewById(R.id.btnAddNote);
        // profilebtn = findViewById(R.id.btnProfile);
         gridView = findViewById(R.id.notesGridView);
+
+        go_back=findViewById(R.id.back_btn);
+
+        go_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Notes_Activity.this, MainActivityAfak.class);
+                intent.putExtra("uid", userId);
+                startActivity(intent);
+                finish();
+
+            }
+        });
 
         // Set up listeners
         addNoteBtn.setOnClickListener(v -> {

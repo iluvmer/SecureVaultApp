@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="24dp"
     android:background="@color/navy">
+
     <!-- Toolbar -->
 
 
     <RelativeLayout
         android:id="@+id/custom_toolbar"
-        android:layout_width="343dp"
-        android:layout_height="58dp"
+        android:layout_width="306dp"
+        android:layout_height="55dp"
         android:layout_margin="32dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/toolbar_background"
@@ -43,68 +46,75 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/NoteTitleLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="340dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="115dp"
-        app:hintEnabled="false"
-        android:background="@color/beige"
-        android:hint="Your note"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardInputForm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/beige"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/NoteTitle"
-            android:layout_width="340dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:hint="Note title"
-            android:inputType="textCapWords"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/noteContentLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:background="@color/beige"
-        android:layout_width="340dp"
-        android:layout_height="236dp"
-        android:layout_marginTop="20dp"
-        android:hint="Your note description"
-        app:hintEnabled="false"
-        app:layout_constraintTop_toBottomOf="@id/NoteTitleLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/NoteContent"
-            android:layout_width="339dp"
-            android:layout_height="match_parent"
-            android:hint="Your note description"
-            android:inputType="textMultiLine"
-            android:minLines="5"
-            android:padding="16dp"
-            android:textColorHint="@android:color/darker_gray" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonSave"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="340dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/beige"
-        android:text="Save"
-        android:textColor="#535353"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/noteContentLayout"
-        app:strokeColor="@android:color/darker_gray"
-        app:strokeWidth="2dp" />
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="24dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="419dp"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/NoteTitleLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Note"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/NoteTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/noteContentLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="188dp"
+                android:layout_marginBottom="16dp"
+                android:hint="note description">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/NoteContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:gravity="top|start"
+                    android:imeOptions="actionNone"
+                    android:singleLine="false"
+                    android:lines="5" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Save Button -->
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/navy"
+                android:text="Save"
+                android:textColor="@color/beige" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
