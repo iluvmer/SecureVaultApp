@@ -13,4 +13,5 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="email_locked_message">Email cannot be changed for security reasons</string>
+    <string name="autofill_service_description">autofill service description</string>
 </resources>

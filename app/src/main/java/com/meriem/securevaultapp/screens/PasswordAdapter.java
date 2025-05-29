@@ -175,6 +175,15 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
             });
         }
     }
+    public static String packageNameToDomain(String packageName) {
+        if (packageName == null || !packageName.contains(".")) return packageName;
+
+        //example :  com.instagram.android → instagram.android
+        String[] parts = packageName.split("\\.");
+        if (parts.length < 2) return packageName;
+        // Simple heuristic: pick the 2nd part + ".com"
+        return parts[1] + ".com";
+    }
     public interface OnPasswordClickListener {
         void onDeleteClicked(RealmPasswords password);
         void onEditClicked(RealmPasswords password);

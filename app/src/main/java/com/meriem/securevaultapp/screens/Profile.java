@@ -1,7 +1,9 @@
 package com.meriem.securevaultapp.screens;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,7 +43,12 @@ public class Profile extends AppCompatActivity {
         Button edit = findViewById(R.id.edit_profile);
         ImageButton go_back = findViewById(R.id.back_btn);
         Button btnLogout = findViewById(R.id.btn_logout);
-       // Button btnFingerprint = findViewById(R.id.btn_fingerprint_settings);
+        Button enableAutofillButton = findViewById(R.id.enable_autofill_button);
+        enableAutofillButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE);
+            intent.setData(Uri.parse("package:com.meriem.securevaultapp"));
+            startActivity(intent);
+        });
 
         // Initialize Realm
         realm = Realm.getDefaultInstance();

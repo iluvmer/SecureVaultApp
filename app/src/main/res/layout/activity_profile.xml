@@ -134,7 +134,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_contact"
+            android:id="@+id/enable_autofill_button"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="70dp"
@@ -142,7 +142,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:minHeight="56dp"
-            android:text="Contact Us"
+            android:text="enable autofill"
             android:textColor="#535353"
             app:icon="@mipmap/contactus_foreground"
             app:iconTint="#535353"

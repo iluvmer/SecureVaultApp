@@ -176,4 +176,5 @@ public class MainPasswordListScreen extends AppCompatActivity {
 
         dialog.show();
     }
+
 }

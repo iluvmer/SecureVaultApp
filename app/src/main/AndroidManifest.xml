@@ -38,8 +38,21 @@
         <activity android:name=".screens.MainPasswordListScreen" />
         <activity android:name=".screens.MainActivityAfak" />
         <activity android:name=".screens.FingerprintActivity" />
+        <activity android:name=".screens.PasswordGeneratorActivity"/>
 
 
+        <service
+            android:name=".services.MyAutofillService"
+            android:permission="android.permission.BIND_AUTOFILL_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.autofill.AutofillService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.autofill"
+                android:resource="@xml/autofill_service" />
+        </service>
 
 
     </application>
