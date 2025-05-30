@@ -92,7 +92,30 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
+    private boolean isPackageFormat(String input) {
+        return input.startsWith("com.") && input.split("\\.").length >= 3;
+    }
 
+    private String extractAppNameFromPackage(String packageName) {
+        String[] parts = packageName.split("\\.");
+        if (parts.length >= 3) {
+            return parts[1]; // e.g., "instagram" from "com.instagram.android"
+        }
+        return packageName;
+    }
+
+
+    private String getFallbackDomainFromPackage(String packageName) {
+        String appName = extractAppNameFromPackage(packageName);
+        return appName + ".com"; // e.g., "instagram.com"
+    }
+    private String getDisplayName(String input) {
+        if (isPackageFormat(input)) {
+            return capitalize(extractAppNameFromPackage(input)); // e.g., Instagram
+        } else {
+            return capitalize(extractDomainName(input)); // e.g., Facebook
+        }
+    }
 
 
     @Override
@@ -100,12 +123,18 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
         RealmPasswords entry = passwordList.get(position);
 
         // For favicon
-        String domainForIcon = extractDomain(entry.getWebsite());
+        String rawInput = entry.getWebsite();
+        String domainForIcon;
+
+        if (isPackageFormat(rawInput)) {
+            domainForIcon = getFallbackDomainFromPackage(rawInput); // e.g., instagram.com
+        } else {
+            domainForIcon = extractDomain(rawInput); // e.g., facebook.com
+        }
         String iconUrl = "https://www.google.com/s2/favicons?sz=64&domain=" + domainForIcon;
 
         // For pretty display name
-        String cleanName = capitalize(extractDomainName(entry.getWebsite()));
-
+        String cleanName = getDisplayName(entry.getWebsite());
         holder.websiteTextView.setText(cleanName);
         holder.emailTextView.setText(entry.getEmail());
 
