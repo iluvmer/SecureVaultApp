@@ -41,7 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:scaleType="centerCrop" />
 
-
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -70,8 +69,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/edit_profile"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_width="332dp"
+            android:layout_height="58dp"
             android:layout_marginTop="40dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
@@ -92,9 +91,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_logout"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="332dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:minHeight="56dp"
@@ -108,37 +107,37 @@
             app:strokeWidth="2dp"
             app:layout_constraintTop_toBottomOf="@id/edit_profile"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
-
+        <!-- Report Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_report"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="332dp"
+            android:layout_height="58dp"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="24dp"
             android:minHeight="56dp"
             android:text="Report"
             android:textColor="#535353"
             app:icon="@drawable/baseline_error_24"
-            app:iconTint="#535353"
-            app:iconPadding="8dp"
             app:iconGravity="start"
-            app:strokeColor="#8F8F8F"
-            app:strokeWidth="2dp"
-            app:layout_constraintTop_toBottomOf="@id/btn_logout"
+            app:iconPadding="8dp"
+            app:iconTint="#535353"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/btn_logout"
+            app:strokeColor="#8F8F8F"
+            app:strokeWidth="2dp" />
 
-
+        <!-- Enable Autofill Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/enable_autofill_button"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="332dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:minHeight="56dp"
@@ -154,9 +153,6 @@
             app:layout_constraintTop_toBottomOf="@id/btn_report"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
