@@ -29,6 +29,17 @@
             android:padding="8dp"
             android:src="@drawable/baseline_arrow_back_ios_24" />
 
+        <ImageButton
+            android:id="@+id/save_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Save"
+            android:padding="8dp"
+            android:src="@drawable/baseline_save_24" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,8 +49,7 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-
-    <!-- Note  -->
+    <!-- Note Content -->
     <LinearLayout
         android:id="@+id/noteDescLayout"
         android:layout_width="302dp"
@@ -54,25 +64,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
 
-        <!-- Note Title inside the card -->
-        <TextView
+        <!-- Note Title -->
+        <EditText
             android:id="@+id/noteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="Note Name"
+            android:hint="Note title"
+            android:inputType="text"
             android:textColor="@color/black"
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <!-- Note Description -->
-        <TextView
+        <!-- Note Content -->
+        <EditText
             android:id="@+id/noteDesc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="110dp"
+            android:gravity="top"
+            android:hint="Note Description"
+            android:inputType="textMultiLine"
             android:lineSpacingExtra="6dp"
-            android:text="Note description goes here"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -93,6 +106,4 @@
                 android:src="@drawable/baseline_delete_24" />
         </LinearLayout>
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

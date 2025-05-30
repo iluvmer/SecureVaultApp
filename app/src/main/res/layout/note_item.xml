@@ -47,13 +47,6 @@
             android:orientation="horizontal"
             android:paddingTop="4dp">
 
-            <ImageButton
-                android:id="@+id/editButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Edit"
-                android:src="@drawable/baseline_edit_note_24" />
 
             <ImageButton
                 android:id="@+id/deleteButton"

@@ -1,5 +1,6 @@
 package com.meriem.securevaultapp.screens;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -152,6 +153,8 @@ public class Notes_Activity extends AppCompatActivity {
 
             TextView noteTitle = view.findViewById(R.id.noteTitle);
             TextView noteDesc = view.findViewById(R.id.noteDesc);
+            ImageButton deleteBtn = view.findViewById(R.id.deleteButton);
+
 
             String title = titles.get(position);
             String description = descriptions.get(position);
@@ -167,7 +170,46 @@ public class Notes_Activity extends AppCompatActivity {
                 context.startActivity(intent);
             });
 
+            deleteBtn.setOnClickListener(v -> deleteNote(position, title));
             return view;
         }
+        private void deleteNote(int position, String title) {
+            new AlertDialog.Builder(context)
+                    .setTitle("Delete Note")
+                    .setMessage("Are you sure you want to delete this note?")
+                    .setPositiveButton("Delete", (dialog, which) -> {
+                        Realm realm = Realm.getDefaultInstance();
+                        try {
+                            realm.executeTransaction(r -> {
+                                // Find and delete the note
+                                RealmResults<RealmNote> notes = r.where(RealmNote.class)
+                                        .equalTo("userId", userId)
+                                        .findAll();
+
+                                for (RealmNote note : notes) {
+                                    try {
+                                        String decryptedTitle = EncryptionUtils.decrypt(note.getEncryptedTitle());
+                                        if (decryptedTitle.equals(title)) {
+                                            note.deleteFromRealm();
+                                            break;
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
+                            // Remove from local lists and update UI
+                            titles.remove(position);
+                            descriptions.remove(position);
+                            notifyDataSetChanged();
+
+                            Toast.makeText(context, "Note deleted", Toast.LENGTH_SHORT).show();
+                        } finally {
+                            realm.close();
+                        }
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
     }
-}
+} }
