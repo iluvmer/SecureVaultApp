@@ -1,29 +1,25 @@
 package com.meriem.securevaultapp.screens;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.DisplayMetrics;
+import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.meriem.securevaultapp.R;
 import com.meriem.securevaultapp.models.RealmUser;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import io.realm.Realm;
 
@@ -32,10 +28,12 @@ public class Profile extends AppCompatActivity {
     private String uid;
     private TextView tvName, tvEmail;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        ImageView profileImage = findViewById(R.id.profile_image);
 
         uid = getIntent().getStringExtra("uid");
         if (uid == null || uid.isEmpty()) {
@@ -51,12 +49,7 @@ public class Profile extends AppCompatActivity {
         Button edit = findViewById(R.id.edit_profile);
         ImageButton go_back = findViewById(R.id.back_btn);
         Button btnLogout = findViewById(R.id.btn_logout);
-        Button enableAutofillButton = findViewById(R.id.enable_autofill_button);
-        enableAutofillButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE);
-            intent.setData(Uri.parse("package:com.meriem.securevaultapp"));
-            startActivity(intent);
-        });
+       // Button btnFingerprint = findViewById(R.id.btn_fingerprint_settings);
 
         // Initialize Realm
         realm = Realm.getDefaultInstance();
@@ -88,59 +81,6 @@ public class Profile extends AppCompatActivity {
             Toast.makeText(Profile.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
         });
 
-        Button reportButton = findViewById(R.id.btn_report);
-        reportButton.setOnClickListener(v -> {
-            LayoutInflater inflater = LayoutInflater.from(this);
-            View dialogView = inflater.inflate(R.layout.report_dialog, null);
-
-            EditText editProblem = dialogView.findViewById(R.id.edit_problem);
-            Button btnSave = dialogView.findViewById(R.id.btnSend);
-            Button btnCancel = dialogView.findViewById(R.id.btnCancel);
-
-            AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setView(dialogView)
-                    .create();
-
-            btnSave.setOnClickListener(view -> {
-                String problemText = editProblem.getText().toString().trim();
-
-                if (problemText.isEmpty()) {
-                    Toast.makeText(this, "Please describe your issue", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.setData(Uri.parse("mailto:"));
-
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@gmail.com"});
-                emailIntent.putExtra(Intent.EXTRA_TEXT, problemText);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Reporting a problem:");
-
-                try {
-                    startActivity(Intent.createChooser(emailIntent, "Send email using:"));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show();
-                }
-
-                dialog.dismiss();
-            });
-
-            btnCancel.setOnClickListener(view -> dialog.dismiss());
-
-            dialog.show();
-            Window window = dialog.getWindow();
-            if (window != null) {
-                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams params = window.getAttributes();
-                DisplayMetrics dm = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(dm);
-                params.width = (int)(dm.widthPixels * 0.9);
-
-                window.setAttributes(params);
-            }
-        });
-
 
     }
 
@@ -159,6 +99,15 @@ public class Profile extends AppCompatActivity {
                 String firstName = user.getFirstName();
                 String lastName = user.getLastName();
                 String email = user.getEmail();
+                // Load profile image if available
+                ImageView profileImage = findViewById(R.id.profile_image);
+                if (user.getProfileImageUrl() != null && !user.getProfileImageUrl().isEmpty()) {
+                    byte[] imageBytes = Base64.decode(user.getProfileImageUrl(), Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                    profileImage.setImageBitmap(bitmap);
+                } else {
+                    profileImage.setImageResource(R.drawable.pfp);
+                }
 
                 Log.d("Profile", "Loaded data - " +
                         "UID: " + user.getUid() + ", " +
