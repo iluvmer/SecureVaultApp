@@ -66,6 +66,7 @@ public class AddPasswordActivity extends AppCompatActivity {
         ImageButton buttonOpenGenerator = findViewById(R.id.buttonGenerator);
         buttonOpenGenerator.setOnClickListener(v -> {
             Intent intent = new Intent(this, PasswordGeneratorActivity.class);
+            intent.putExtra("returnResult", true); // this line for the generator to know it was launched with an intent
             startActivityForResult(intent, PASSWORD_GENERATOR_REQUEST);
         });
 

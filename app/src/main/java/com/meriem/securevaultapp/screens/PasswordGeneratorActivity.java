@@ -30,6 +30,8 @@ public class PasswordGeneratorActivity extends AppCompatActivity {
     private static final String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
     private static final String NUMBERS = "0123456789";
     private static final String SYMBOLS = "!@#$%^&*()-_=+[]{};:,.<>?/";
+    private boolean shouldReturnResult = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public class PasswordGeneratorActivity extends AppCompatActivity {
                 Toast.makeText(this, "Password copied!", Toast.LENGTH_SHORT).show();
             }
         });
+        // detect if the activity was launched as result intent or just normal activity
+        shouldReturnResult = getIntent().getBooleanExtra("returnResult", false);
+
     }
 
     private void generatePassword() {
@@ -94,10 +99,13 @@ public class PasswordGeneratorActivity extends AppCompatActivity {
         generatedPasswordTextView.setText(password.toString());
         updateStrengthIndicator(password.toString());
 
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("generatedPassword", generatedPassword);
-        setResult(RESULT_OK, resultIntent);
-        finish();
+        if(shouldReturnResult) {
+            //return password to the launching intent
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("generatedPassword", generatedPassword);
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        }
     }
 
     private void updateStrengthIndicator(String password) {
