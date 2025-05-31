@@ -17,7 +17,7 @@ public class RealmUser extends RealmObject {
     private String lastName;
     private boolean useFingerprintLogin;
     private String phone;
-
+    private String profileImageUrl;
     public RealmUser() {}
     // Constructor with all fields
     public RealmUser(String uid, String email, String firstName, String lastName) {
@@ -45,6 +45,13 @@ public class RealmUser extends RealmObject {
     }
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
     @Override
     public String toString() {
         return "RealmUser{" +
